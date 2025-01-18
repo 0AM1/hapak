@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-card.alik { background-color: #e3f2fd; }
+        .stat-card.slavik { background-color: #f3e5f5; }
+        .stat-card.ori { background-color: #e8f5e9; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        td {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        td:hover {
+            background-color: #f8f9fa;
+        }
+
+        td.alik { background-color: #e3f2fd; }
+        td.slavik { background-color: #f3e5f5; }
+        td.ori { background-color: #e8f5e9; }
+
+        select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="stats">
+        <div class="stat-card alik">
+            <h3>Alik</h3>
+            <p><span id="alikHours">0</span> hours</p>
+        </div>
+        <div class="stat-card slavik">
+            <h3>Slavik</h3>
+            <p><span id="slavikHours">0</span> hours</p>
+        </div>
+        <div class="stat-card ori">
+            <h3>Ori</h3>
+            <p><span id="oriHours">0</span> hours</p>
+        </div>
+    </div>
+
+    <table id="scheduleTable">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const schedule = {
+            "6:00": ["Alik","Alik","Alik","Ori","Slavik","Slavik","Alik","Alik"],
+            "8:00": ["Alik","Alik","Alik","Ori","Alik","Slavik","Alik","Alik"],
+            "10:00": ["Alik","Alik","Alik","Ori","Alik","Slavik","Alik","Ori"],
+            "12:00": ["Ori","Alik","Ori","Alik","Alik","Alik","Slavik","Ori"],
+            "14:00": ["Ori","Alik","Ori","Alik","Alik","Alik","Slavik","Ori"],
+            "16:00": ["Ori","Ori","Ori","Alik","Alik","Alik","Slavik","Ori"],
+            "18:00": ["Ori","Ori","Ori","Alik","Ori","Alik","Slavik","Ori"],
+            "20:00": ["Slavik","Ori","Alik","Alik","Ori","Slavik","Slavik","Ori"],
+            "22:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Slavik",""],
+            "0:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Alik",""],
+            "2:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Alik",""],
+            "4:00": ["Alik","Alik","Ori","Slavik","Slavik","Alik","Alik",""]
+        };
+
+        function createTable() {
+            const tbody = document.querySelector('tbody');
+            Object.entries(schedule).forEach(([time, shifts]) => {
+                const row = document.createElement('tr');
+                const timeCell = document.createElement('td');
+                timeCell.textContent = time;
+                row.appendChild(timeCell);
+
+                shifts.forEach(person => {
+                    const cell = document.createElement('td');
+                    if (person) {
+                        cell.textContent = person;
+                        cell.className = person.toLowerCase();
+                        cell.onclick = () => handleCellClick(cell);
+                    }
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function handleCellClick(cell) {
+            const currentPerson = cell.textContent;
+            const persons = ['Alik', 'Slavik', 'Ori'];
+            const select = document.createElement('select');
+            
+            persons.forEach(person => {
+                const option = document.createElement('option');
+                option.value = person;
+                option.textContent = person;
+                if (person === currentPerson) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+
+            select.onchange = (e) => {
+                const newPerson = e.target.value;
+                cell.textContent = newPerson;
+                cell.className = newPerson.toLowerCase();
+                select.remove();
+                updateHours();
+            };
+
+            select.onblur = () => {
+                select.remove();
+                cell.textContent = currentPerson;
+            };
+
+            cell.textContent = '';
+            cell.appendChild(select);
+            select.focus();
+        }
+
+        function updateHours() {
+            const cells = document.querySelectorAll('td');
+            let alikHours = 0;
+            let slavikHours = 0;
+            let oriHours = 0;
+
+            cells.forEach(cell => {
+                if (cell.textContent === 'Alik') alikHours += 2;
+                if (cell.textContent === 'Slavik') slavikHours += 2;
+                if (cell.textContent === 'Ori') oriHours += 2;
+            });
+
+            document.getElementById('alikHours').textContent = alikHours;
+            document.getElementById('slavikHours').textContent = slavikHours;
+            document.getElementById('oriHours').textContent = oriHours;
+        }
+
+        createTable();
+        updateHours();
+    </script>
+</body>
+</html>
