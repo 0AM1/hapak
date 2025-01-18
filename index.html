@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משמרות חפ״ק</title>
+    <title>חפ״ק גיבור</title>
     <style>
         * {
             margin: 0;
@@ -35,8 +35,8 @@
             width: 200%;
             height: 200%;
             background: transparent;
-            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%),
-                        radial-gradient(at 100% 0%, hsla(225,39%,25%,1) 0, transparent 50%);
+            background: radial-gradient(at 0% 0%, rgb(19, 15, 21) 0, transparent 50%),
+                        radial-gradient(at 100% 0%, rgb(52, 76, 153) 0, transparent 50%);
             z-index: -1;
         }
 
@@ -62,20 +62,24 @@
             transform: translateY(-5px);
         }
 
-        .stat-card.alik { background: linear-gradient(145deg, rgba(33, 150, 243, 0.5), rgba(33, 150, 243, 0.1)); }
-        .stat-card.slavik { background: linear-gradient(145deg, rgba(192, 20, 20, 0.661), rgba(176, 39, 39, 0.297)); }
-        .stat-card.ori { background: linear-gradient(145deg, rgba(211, 166, 31, 0.773), rgba(175, 168, 76, 0.493)); }
+        .stat-card.alik { background: linear-gradient(145deg, rgba(14, 123, 212, 0.787), rgba(33, 150, 243, 0.1)); }
+        .stat-card.slavik { background: linear-gradient(145deg, rgba(192, 20, 20, 0.809), rgba(176, 39, 39, 0.297)); }
+        .stat-card.ori { background: linear-gradient(145deg, rgba(232, 163, 14, 0.867), rgba(175, 168, 76, 0.493)); }
 
         .stat-card h3 {
             font-size: 1.5rem;
             margin-bottom: 10px;
             color: rgba(255, 255, 255, 0.9);
+            text-align: right;
         }
 
         .stat-card p {
             font-size: 2rem;
             font-weight: bold;
             color: rgba(255, 255, 255, 0.95);
+            text-align: right;
+            direction: rtl;
+}
         }
 
         .table-container {
@@ -120,8 +124,8 @@
         }
 
         td.אולג { background: rgba(33, 150, 243, 0.2); }
-        td.סלבה { background: rgba(156, 12, 12, 0.503); }
-        td.אורי { background: rgba(198, 176, 35, 0.737); }
+        td.סלבה { background: rgba(184, 10, 10, 0.705); }
+        td.אורי { background: rgba(225, 190, 13, 0.737); }
 
         td.אולג:hover { background: rgba(36, 148, 241, 0.766); }
         td.סלבה:hover { background: rgba(237, 13, 77, 0.771); }
@@ -165,15 +169,15 @@
         <div class="stats">
             <div class="stat-card alik">
                 <h3>אולג</h3>
-                <p>שעות <span id="alikHours">0</span></p>
+                <p> <span id="alikHours">0</span> ש׳</p>
             </div>
             <div class="stat-card slavik">
                 <h3>סלבה</h3>
-                <p>שעות <span id="slavikHours">0</span></p>
+                <p><span id="slavikHours">0</span> ש׳</p>
             </div>
             <div class="stat-card ori">
                 <h3>אורי</h3>
-                <p>שעות <span id="oriHours">0</span></p>
+                <p><span id="oriHours">0</span> ש׳</p>
             </div>
         </div>
 
@@ -181,15 +185,15 @@
             <table id="scheduleTable">
                 <thead>
                     <tr>
-                        <th>שעות</th>
-                        <th>מוצ״ש</th>
-                        <th>ראשון</th>
-                        <th>שני</th>
-                        <th>שלישי</th>
-                        <th>רביעי</th>
-                        <th>חמישי</th>
-                        <th>שישי</th>
-                        <th>שבת</th>
+                        <th></th>
+                        <th>18 מוצ״ש</th>
+                        <th>19 ראשון</th>
+                        <th>20 שני</th>
+                        <th>21 שלישי</th>
+                        <th>22 רביעי</th>
+                        <th>23 חמישי</th>
+                        <th>24 שישי</th>
+                        <th>25 שבת</th>
                     </tr>
                 </thead>
                 <tbody>
