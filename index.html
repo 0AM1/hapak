@@ -3,110 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friends Schedule</title>
+    <title>משמרות חפ״ק</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(125deg, #13151a, #2d2f3a);
+            color: #e1e2e6;
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200%;
+            background: transparent;
+            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%),
+                        radial-gradient(at 100% 0%, hsla(225,39%,25%,1) 0, transparent 50%);
+            z-index: -1;
         }
 
         .stats {
             display: flex;
             gap: 20px;
-            margin-bottom: 20px;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
 
         .stat-card {
             flex: 1;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
         }
 
-        .stat-card.alik { background-color: #e3f2fd; }
-        .stat-card.slavik { background-color: #f3e5f5; }
-        .stat-card.ori { background-color: #e8f5e9; }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card.alik { background: linear-gradient(145deg, rgba(33, 150, 243, 0.5), rgba(33, 150, 243, 0.1)); }
+        .stat-card.slavik { background: linear-gradient(145deg, rgba(192, 20, 20, 0.661), rgba(176, 39, 39, 0.297)); }
+        .stat-card.ori { background: linear-gradient(145deg, rgba(211, 166, 31, 0.773), rgba(175, 168, 76, 0.493)); }
+
+        .stat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stat-card p {
+            font-size: 2rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-collapse: separate;
+            border-spacing: 0;
+            color: #e1e2e6;
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: center;
-            border: 1px solid #ddd;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         th {
-            background-color: #f8f9fa;
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
         }
 
         td {
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            border-radius: 8px;
         }
 
-        td:hover {
-            background-color: #f8f9fa;
+        td:hover {  
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        td.alik { background-color: #e3f2fd; }
-        td.slavik { background-color: #f3e5f5; }
-        td.ori { background-color: #e8f5e9; }
+        td.alik { background: rgba(33, 150, 243, 0.2); }
+        td.slavik { background: rgba(156, 12, 12, 0.503); }
+        td.ori { background: rgba(198, 176, 35, 0.737); }
+
+        td.alik:hover { background: rgba(36, 148, 241, 0.766); }
+        td.slavik:hover { background: rgba(237, 13, 77, 0.771); }
+        td.ori:hover { background: rgba(220, 138, 14, 0.792); }
 
         select {
-            padding: 5px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        select option {
+            background: #2d2f3a;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="stats">
-        <div class="stat-card alik">
-            <h3>Alik</h3>
-            <p><span id="alikHours">0</span> hours</p>
+    <div class="background-gradient"></div>
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card alik">
+                <h3>Alik</h3>
+                <p><span id="alikHours">0</span> hours</p>
+            </div>
+            <div class="stat-card slavik">
+                <h3>Slavik</h3>
+                <p><span id="slavikHours">0</span> hours</p>
+            </div>
+            <div class="stat-card ori">
+                <h3>Ori</h3>
+                <p><span id="oriHours">0</span> hours</p>
+            </div>
         </div>
-        <div class="stat-card slavik">
-            <h3>Slavik</h3>
-            <p><span id="slavikHours">0</span> hours</p>
-        </div>
-        <div class="stat-card ori">
-            <h3>Ori</h3>
-            <p><span id="oriHours">0</span> hours</p>
+
+        <div class="table-container">
+            <table id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <table id="scheduleTable">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
     <script>
         const schedule = {
