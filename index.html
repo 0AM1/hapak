@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="script.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משמרות חפ״ק</title>
@@ -56,6 +55,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: transform 0.3s ease;
+            text-align: right;
         }
 
         .stat-card:hover {
@@ -119,13 +119,13 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        td.alik { background: rgba(33, 150, 243, 0.2); }
-        td.slavik { background: rgba(156, 12, 12, 0.503); }
-        td.ori { background: rgba(198, 176, 35, 0.737); }
+        td.אולג { background: rgba(33, 150, 243, 0.2); }
+        td.סלבה { background: rgba(156, 12, 12, 0.503); }
+        td.אורי { background: rgba(198, 176, 35, 0.737); }
 
-        td.alik:hover { background: rgba(36, 148, 241, 0.766); }
-        td.slavik:hover { background: rgba(237, 13, 77, 0.771); }
-        td.ori:hover { background: rgba(220, 138, 14, 0.792); }
+        td.אולג:hover { background: rgba(36, 148, 241, 0.766); }
+        td.סלבה:hover { background: rgba(237, 13, 77, 0.771); }
+        td.אורי:hover { background: rgba(220, 138, 14, 0.792); }
 
         select {
             padding: 8px 12px;
@@ -165,15 +165,15 @@
         <div class="stats">
             <div class="stat-card alik">
                 <h3>אולג</h3>
-                <p><span id="alikHours">0</span> hours</p>
+                <p><span id="alikHours">0</span> שעות</p>
             </div>
             <div class="stat-card slavik">
                 <h3>סלבה</h3>
-                <p><span id="slavikHours">0</span> hours</p>
+                <p><span id="slavikHours">0</span> שעות</p>
             </div>
             <div class="stat-card ori">
                 <h3>אורי</h3>
-                <p><span id="oriHours">0</span> hours</p>
+                <p><span id="oriHours">0</span> שעות</p>
             </div>
         </div>
 
@@ -200,18 +200,18 @@
 
     <script>
         const schedule = {
-            "6:00": ["Alik","Alik","Alik","Ori","Slavik","Slavik","Alik","Alik"],
-            "8:00": ["Alik","Alik","Alik","Ori","Alik","Slavik","Alik","Alik"],
-            "10:00": ["Alik","Alik","Alik","Ori","Alik","Slavik","Alik","Ori"],
-            "12:00": ["Ori","Alik","Ori","Alik","Alik","Alik","Slavik","Ori"],
-            "14:00": ["Ori","Alik","Ori","Alik","Alik","Alik","Slavik","Ori"],
-            "16:00": ["Ori","Ori","Ori","Alik","Alik","Alik","Slavik","Ori"],
-            "18:00": ["Ori","Ori","Ori","Alik","Ori","Alik","Slavik","Ori"],
-            "20:00": ["Slavik","Ori","Alik","Alik","Ori","Slavik","Slavik","Ori"],
-            "22:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Slavik",""],
-            "0:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Alik",""],
-            "2:00": ["Slavik","Ori","Alik","Slavik","Ori","Slavik","Alik",""],
-            "4:00": ["Alik","Alik","Ori","Slavik","Slavik","Alik","Alik",""]
+            "6:00": ["אולג","אולג","אולג","אורי","סלבה","סלבה","אולג","אולג"],
+            "8:00": ["אולג","אולג","אולג","אורי","אולג","סלבה","אולג","אולג"],
+            "10:00": ["אולג","אולג","אולג","אורי","אולג","סלבה","אולג","אורי"],
+            "12:00": ["אורי","אולג","אורי","אולג","אולג","אולג","סלבה","אורי"],
+            "14:00": ["אורי","אולג","אורי","אולג","אולג","אולג","סלבה","אורי"],
+            "16:00": ["אורי","אורי","אורי","אולג","אולג","אולג","סלבה","אורי"],
+            "18:00": ["אורי","אורי","אורי","אולג","אורי","אולג","סלבה","אורי"],
+            "20:00": ["סלבה","אורי","אולג","אולג","אורי","סלבה","סלבה","אורי"],
+            "22:00": ["סלבה","אורי","אולג","סלבה","אורי","סלבה","סלבה",""],
+            "0:00": ["סלבה","אורי","אולג","סלבה","אורי","סלבה","אולג",""],
+            "2:00": ["סלבה","אורי","אולג","סלבה","אורי","סלבה","אולג",""],
+            "4:00": ["אולג","אולג","אורי","סלבה","סלבה","אולג","אולג",""]
         };
 
         function createTable() {
@@ -238,7 +238,7 @@
 
         function handleCellClick(cell) {
             const currentPerson = cell.textContent;
-            const persons = ['Alik', 'Slavik', 'Ori'];
+            const persons = ['אולג', 'סלבה', 'אורי'];
             const select = document.createElement('select');
             
             persons.forEach(person => {
@@ -276,9 +276,9 @@
             let oriHours = 0;
 
             cells.forEach(cell => {
-                if (cell.textContent === 'Alik') alikHours += 2;
-                if (cell.textContent === 'Slavik') slavikHours += 2;
-                if (cell.textContent === 'Ori') oriHours += 2;
+                if (cell.textContent === 'אולג') alikHours += 2;
+                if (cell.textContent === 'סלבה') slavikHours += 2;
+                if (cell.textContent === 'אורי') oriHours += 2;
             });
 
             document.getElementById('alikHours').textContent = alikHours;
@@ -291,4 +291,3 @@
     </script>
 </body>
 </html>
-
